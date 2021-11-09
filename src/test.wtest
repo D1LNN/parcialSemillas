@@ -1,0 +1,87 @@
+import Plantas.*
+import Parcelas.*
+import Inta.*
+
+describe "tests plantas" {
+
+	const menta = new Menta(anioDeObtencion = 2000, altura = 1)
+	const soja = new Soja(anioDeObtencion = 2009, altura = 0.6)
+	const soja1 = new Soja(anioDeObtencion = 2009, altura = 1.1)
+	const soja2 = new Soja(anioDeObtencion = 2009, altura = 2)
+	const soja3 = new Soja(anioDeObtencion = 2009, altura = 1.5)
+	const soja4 = new Soja(anioDeObtencion = 2009, altura = 2.2)
+	const quinoaDel2010 = new Quinoa(horasDeSolToleradas = 12, anioDeObtencion = 2010, altura = 0.6)
+	const quinoaDel2001 = new Quinoa(horasDeSolToleradas = 9, anioDeObtencion = 2001, altura = 0.6)
+	const sojaTransgenica = new SojaTransgenica(anioDeObtencion = 2009, altura = 0.6)
+	const hierbabuena = new Hierbabuena(anioDeObtencion = 2000, altura = 2)
+	const parcelaEco = new ParcelaEcologica(ancho = 20, largo = 1, horasDeSolQueRecibe = 8, plantas = #{})
+
+	method initialize() {
+		parcelaEco.plantar(soja1)
+		parcelaEco.plantar(soja2)
+		parcelaEco.plantar(soja3)
+		parcelaEco.plantar(soja4)
+	}
+
+	test "Menta da semillas" {
+		assert.that(menta.daNuevasSemillas())
+	}
+
+	test "Menta ocupa 3 mts" {
+		assert.equals(3, menta.espacioQueOcupa())
+	}
+
+	test "Soja tolera 7 horas" {
+		assert.equals(7, soja.horasDeSolToleradas())
+	}
+
+	test "Soja no da semillas" {
+		assert.notThat(soja.daNuevasSemillas())
+	}
+
+	test "Soja ocupa 0.3" {
+		assert.equals(0.3, soja.espacioQueOcupa())
+	}
+
+	test "Quinoa del 2010 tolera 12 horas" {
+		assert.equals(12, quinoaDel2010.horasDeSolToleradas())
+	}
+
+	test "Quinoa del 2010 da semillas" {
+		assert.that(quinoaDel2010.daNuevasSemillas())
+	}
+
+	test "Quinoa del 2001 tolera 9 horas" {
+		assert.equals(9, quinoaDel2001.horasDeSolToleradas())
+	}
+
+	test "Quinoa del 2001 da semillas" {
+		assert.that(quinoaDel2001.daNuevasSemillas())
+	}
+
+	test "La soja transgénica nunca da semillas" {
+		assert.notThat(sojaTransgenica.daNuevasSemillas())
+	}
+
+	test "La parcela ecologica es de 20 m2 de superficie" {
+		assert.equals(20, parcelaEco.superficie())
+	}
+
+	test "La percela ecologica tolera hasta 4" {
+		assert.equals(4, parcelaEco.cantidadDePlantasQueTolera())
+	}
+
+	test "La parcela ecologia no tiene complicaciones" {
+		assert.notThat(parcelaEco.tieneComplicaciones())
+	}
+
+	test "Si la parcela ecologica le agrego otra planta mas lanza error" {
+		assert.throwsException({ parcelaEco.plantar(menta)})
+	}
+
+	test "Hierbabuena ocupa 12 m2" {
+		assert.equals(12, hierbabuena.espacioQueOcupa())
+	}
+
+}
+
